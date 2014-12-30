@@ -1,0 +1,34 @@
+---
+name: Nginx PHP DB
+description: Nginx PHP DB
+keywords: ''
+type: Default
+documentation: ''
+images:
+- name: web_latest
+  source: web:latest
+  category: Web Server Bundle
+  type: Default
+  ports:
+  - host_port: '80'
+    container_port: '80'
+    proto: TCP
+  - host_port: '443'
+    container_port: '443'
+    proto: TCP
+  links:
+  - service: db
+    alias: db
+  volumes_from:
+  - service: data
+- name: data
+  source: centurylink/data-container:latest
+  category: Web Server Bundle
+  type: Default
+  volumes:
+  - host_path: "/data"
+    container_path: "/data"
+- name: db
+  source: tutum/mariadb:latest
+  category: Web Server Bundle
+  type: Default
